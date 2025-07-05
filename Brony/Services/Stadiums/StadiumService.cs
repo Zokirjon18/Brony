@@ -1,4 +1,4 @@
-using Brony.Models;
+using Brony.Domain;
 using Brony.Services.Bookings;
 
 namespace Brony.Services.Stadiums;

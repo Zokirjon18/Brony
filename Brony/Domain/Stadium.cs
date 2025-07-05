@@ -1,4 +1,4 @@
-namespace Brony.Models;
+namespace Brony.Domain;
 
 public class Stadium
 {

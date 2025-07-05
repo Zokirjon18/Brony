@@ -1,58 +1,36 @@
+using Brony.Constants;
+using Brony.Domain;
+using Brony.Extensions;
+using Brony.Helpers;
 using Brony.Models;
 
 namespace Brony.Services.Users;
 
 public class UserService : IUserService
 {
-    private readonly List<User> users;
-    private int userId;
     public UserService()
     {
-        users = new List<User>()
-        {
-            new User()
-            {
-                Id = 1,
-                FirsName = "Dilmurod",
-                LastName = "Jabborov",
-                PhoneNumber = "1234567890",
-            },
-            new User()
-            {
-                Id = 2,
-                FirsName = "Dilmurod 2",
-                LastName = "Jabborov 2",
-                PhoneNumber = "1234567892",
-            }
-        };
-        userId = 3;
     }
     
-    public void Register(
-        string firstName,
-        string lastName,
-        string phoneNumber,
-        string password)
+    public void Register(UserRegisterModel model)
     {
-        var existUser = users.Find(u => u.PhoneNumber == phoneNumber);
+        var text = FileHelper.ReadFromFile(PathHolder.UsersFilePath);
+
+        var users = text.ToObject<User>();
+
+        var existUser = users.Find(u => u.PhoneNumber == model.PhoneNumber);
         if (existUser != null)
         {
             throw new Exception("User with this phone number already exists.");
         }
         
-        var user = new User
-        {
-            Id = userId,
-            FirsName = firstName,
-            LastName = lastName,
-            PhoneNumber = phoneNumber,
-            Password = password
-        };
-        
-        users.Add(user);
-        
-        userId++;
+        users.Add(model.ToConvert<>());
+
+        var convertedUser = users.ToFileFormat();
+
+        FileHelper.WriteToFile(PathHolder.UsersFilePath, convertedUser);
     }
+
 
     public int Login(string phoneNumber, string password)
     {
@@ -70,16 +48,21 @@ public class UserService : IUserService
         return existUser.Id;
     }
 
-    public User Get(int id)
+
+    public UserRegisterModel Get(int id)
     {
+        var text = FileHelper.ReadFromFile(PathHolder.UsersFilePath);
+
+        var users = text.ToObject<User>();
         var existUser = users.Find(u => u.Id == id);
         if (existUser == null)
         {
             throw new Exception("User is not found.");
         }
         
-        return existUser;   
+        return existUser.ToConvert<UserRegisterModel>();   
     }
+
 
     public void Update(
         int id,

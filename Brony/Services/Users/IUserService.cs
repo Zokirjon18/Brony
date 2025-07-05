@@ -1,14 +1,11 @@
+using Brony.Domain;
 using Brony.Models;
 
 namespace Brony.Services.Users;
 
 public interface IUserService
 {
-    void Register(
-        string firstName, 
-        string lastName, 
-        string phoneNumber,
-        string password);
+    void Register(UserRegisterModel model);
 
     int Login(string phoneNumber, string password);
     

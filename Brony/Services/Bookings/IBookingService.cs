@@ -1,4 +1,4 @@
-using Brony.Models;
+using Brony.Domain;
 
 namespace Brony.Services.Bookings;
 

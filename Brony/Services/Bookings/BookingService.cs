@@ -1,4 +1,7 @@
-using Brony.Models;
+using Brony.Constants;
+using Brony.Domain;
+using Brony.Extensions;
+using Brony.Helpers;
 using Brony.Services.Stadiums;
 using Brony.Services.Users;
 
@@ -16,8 +19,13 @@ public class BookingService : IBookingService
         this.objectHolder = objectHolder;
     }
 
-    public void Book(int userId, int stadiumId, DateTime startTime, DateTime endTime)
+    public void Book(BookingCreateModel createModel)
     {
+        var text = FileHelper.ReadFromFile(PathHolder.BookingsFilePath);
+
+        var convertedUsers = text.ToObject<List<Booking>>();
+
+
         // check user
         objectHolder.UserService.Get(userId);
         
@@ -111,7 +119,7 @@ public class BookingService : IBookingService
         existBooking.EndTime = endTime;
     }
 
-    public Booking Get(int id)
+    public BookingViewModel Get(int id)
     {
         var existBooking = bookings.Find(x => x.Id == bookingId);
 
