@@ -23,7 +23,7 @@ public class UserService : IUserService
         {
             throw new Exception("User with this phone number already exists.");
         }
-        
+
         users.Add(model.ToConvert<>());
 
         var convertedUser = users.ToFileFormat();
