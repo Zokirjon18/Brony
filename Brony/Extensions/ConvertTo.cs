@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Brony.Extensions
+public static UserRegisterModel ConvertingTo(this User obj)
 {
-    internal class ConvertTo
+    return new UserRegisterModel
     {
-    }
+        FirstName = obj.FirsName,
+        LastName = obj.FirsName,
+        PhoneNumber = obj.PhoneNumber
+    };
 }
