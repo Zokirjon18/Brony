@@ -2,8 +2,7 @@ using Brony.Constants;
 using Brony.Domain;
 using Brony.Extensions;
 using Brony.Helpers;
-using Brony.Services.Stadiums;
-using Brony.Services.Users;
+using System.Collections.Generic;
 
 namespace Brony.Services.Bookings;
 
@@ -55,18 +54,8 @@ public class BookingService : IBookingService
                 }
             }
         }
-        
-        var booking = new Booking
-        {
-            Id = bookingId,
-            UserId = userId,
-            StadiumId = stadiumId,
-            StartTime = startTime,
-            EndTime = endTime,
-            Price = existStadium.Price
-        };
-        
-        bookings.Add(booking);
+
+        AddBooking.AddingBooking(bookings, bookingId, userId, stadiumId, startTime, endTime, price);
     }
 
     public void Cancel(int bookingId)

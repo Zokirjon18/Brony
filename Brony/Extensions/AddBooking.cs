@@ -15,7 +15,7 @@ public static class AddBooking
             EndTime = endTime,
             Price = price
         };
-
+        // adding to the list
         bookings.Add(booking);
     }
     #endregion
