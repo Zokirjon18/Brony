@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-public static UserRegisterModel ConvertingTo(this User obj)
+using Brony.Domain;
+using Brony.Models;
+namespace Brony.Extensions;
+public static class ConvertTo
 {
-    return new UserRegisterModel
+    public static UserRegisterModel ConvertingTo(this User obj)
     {
-        FirstName = obj.FirsName,
-        LastName = obj.FirsName,
-        PhoneNumber = obj.PhoneNumber
-    };
+        if (obj == null) 
+        {
+            throw new Exception("Object is null here");
+        }
+            
+        return new UserRegisterModel
+        {
+            FirstName = obj.FirstName,
+            LastName = obj.LastName,
+            PhoneNumber = obj.PhoneNumber
+        };
+    }
 }

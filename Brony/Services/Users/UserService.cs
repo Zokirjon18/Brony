@@ -59,8 +59,8 @@ public class UserService : IUserService
         {
             throw new Exception("User is not found.");
         }
-        
-        return existUser.ToConvert<UserRegisterModel>();   
+
+        return existUser.ConvertingTo();   
     }
 
 
