@@ -11,7 +11,6 @@ namespace Brony.Services.Bookings;
 
 public class BookingService : IBookingService
 {
-    private int bookingId;
     private readonly UserService userService;
     private readonly StadiumService stadiumService;
 
@@ -28,6 +27,8 @@ public class BookingService : IBookingService
         List<Booking> convertedBookings = text.ToBooking();
 
         // check user
+
+        var existUser = userService.Get(createModel.UserId);
 
         // check stadium
         var existStadium = stadiumService.Get(createModel.StadiumId);
@@ -65,12 +66,10 @@ public class BookingService : IBookingService
 
         // preparing for fileload
         string content =
-            $"{bookingId},{createModel.UserId},{createModel.StadiumId}," +
+            $"{IdGeneration.IdGenerate(PathHolder.BookingsFilePath)},{createModel.UserId},{createModel.StadiumId}," +
             $"{createModel.StartTime},{createModel.EndTime},{totalPrice}\n";
 
         File.AppendAllText(PathHolder.BookingsFilePath, content);
-
-        bookingId++;
     }
 
     public void Cancel(int bookingId)
@@ -157,8 +156,6 @@ public class BookingService : IBookingService
 
         return existBooking.ToBookingViewModel();
     }
-
-
 
     public List<Booking> GetAll()
     {
