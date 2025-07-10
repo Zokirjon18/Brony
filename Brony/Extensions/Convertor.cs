@@ -141,6 +141,27 @@ public static class Convertor
         };
     }
 
+    public static StadiumViewModel ToStadiumViewModel(this Stadium stadium)
+    {
+        if (stadium == null)
+        {
+            throw new ArgumentNullException();
+        }
 
+
+        // converting booking domain for view model
+        return new StadiumViewModel
+        {
+            Name = stadium.Name,
+            Width = stadium.Width,
+            Length = stadium.Length,
+            Price = stadium.Price,
+            Location = stadium.Location,
+            PhoneNumber = stadium.PhoneNumber,
+            Description = stadium.Description,
+            StartWorkingTime = stadium.StartWorkingTime,
+            EndWorkingTime = stadium.EndWorkingTime
+        };
+    }
 }
 
