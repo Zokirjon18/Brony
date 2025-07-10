@@ -183,7 +183,7 @@ public class StadiumService : IStadiumService
             {
                 priceResult = GetAllByPrice(locationResult, Convert.ToDecimal(price));
 
-                AllMatches = priceResult;
+                AllMatches.AddRange(priceResult);
             }
             else
             {
@@ -224,7 +224,14 @@ public class StadiumService : IStadiumService
             }
         }
 
-        return AllMatches;
+        List<StadiumViewModel> result = new List<StadiumViewModel>();
+
+        foreach(var stadium in AllMatches)
+        {
+            result.Add(stadium.ToStadiumViewModel());
+        }
+
+        return result;
     }
 
     private List<Stadium> GetAllByLocation(string location)
@@ -304,7 +311,6 @@ public class StadiumService : IStadiumService
         return false;
     }
    
-
     public List<Stadium> ReadFromFileAndConvertToStadiumModel()
     {
         string text = File.ReadAllText(PathHolder.StadiumsFilePath);
