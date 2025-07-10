@@ -11,11 +11,11 @@ public interface IBookingService
 
     void ChangeDateTime(int bookingId, DateTime startDate, DateTime endDate);
 
-    Booking Get(int id);
+    BookingViewModel Get(int id);
 
     List<Booking> GetAll();
 
-    List<Booking> GetAllByUserId(int userId);
+    List<BookingViewModel> GetAllByUserId(int userId);
 
-    List<Booking> GetAllByStadiumId(int stadiumId);
+    List<BookingViewModel> GetAllByStadiumId(int stadiumId);
 }

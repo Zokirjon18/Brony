@@ -88,7 +88,7 @@ public class BookingService : IBookingService
 
         convertedBookings.Remove(existBooking);
 
-        List<string> bookingsInStringFormat = FileHelper.ToFileFormat<Booking>(convertedBookings);
+        List<string> bookingsInStringFormat = ToFileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
         File.WriteAllLines(PathHolder.BookingsFilePath, bookingsInStringFormat);
     }
 
@@ -138,11 +138,11 @@ public class BookingService : IBookingService
         existBooking.StartTime = startTime;
         existBooking.EndTime = endTime;
 
-        List<string> bookingsInStringFormat = FileHelper.ToFileFormat<Booking>(convertedBookings);
+        List<string> bookingsInStringFormat = ToFileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
         File.WriteAllLines(PathHolder.BookingsFilePath, bookingsInStringFormat);
     }
 
-    public Booking Get(int id)
+    public BookingViewModel Get(int id)
     {
         string text = FileHelper.ReadFromFile(PathHolder.BookingsFilePath);
 
@@ -154,7 +154,8 @@ public class BookingService : IBookingService
         {
             throw new Exception("Booking is not found");
         };
-        return existBooking;
+
+        return existBooking.ToBookingViewModel();
     }
 
 
@@ -168,42 +169,42 @@ public class BookingService : IBookingService
         return convertedBookings;
     }
 
-    public List<Booking> GetAllByUserId(int userId)
+    public List<BookingViewModel> GetAllByUserId(int userId)
     {
         string text = FileHelper.ReadFromFile(PathHolder.BookingsFilePath);
 
         List<Booking> convertedBookings = text.ToBooking();
 
-        var result = new List<Booking>();
+        var result = new List<BookingViewModel>();
 
         foreach (var booking in convertedBookings)
         {
             if (booking.UserId == userId)
             {
-                result.Add(booking);
+                result.Add(booking.ToBookingViewModel());
             }
         }
 
         return result;
     }
 
-    public List<Booking> GetAllByStadiumId(int stadiumId)
+    public List<BookingViewModel> GetAllByStadiumId(int stadiumId)
     {
         string text = FileHelper.ReadFromFile(PathHolder.BookingsFilePath);
 
         List<Booking> convertedBookings = text.ToBooking();
 
-        var stadiumBookings = new List<Booking>();
+        var result = new List<BookingViewModel>();
 
         foreach (var item in convertedBookings)
         {
             if (item.StadiumId == stadiumId)
             {
-                stadiumBookings.Add(item);
+                result.Add(item.ToBookingViewModel());
             }
         }
 
-        return stadiumBookings;
+        return result;
     }
 
 }
