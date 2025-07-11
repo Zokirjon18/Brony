@@ -3,22 +3,14 @@ using Brony.Domain;
 using Brony.Extensions;
 using Brony.Helpers;
 using Brony.Models;
+using Brony.Models.Stadiums;
 using Brony.Services.Bookings;
 
 namespace Brony.Services.Stadiums;
 
 public class StadiumService : IStadiumService
 {
-
-
-    public StadiumService()
-    {
-       
-  
-    }
-
-    public void Create(
-        StadiumCreateModel stadiumCreateModel)
+    public void Create(StadiumCreateModel stadiumCreateModel)
     {
         string text = File.ReadAllText(PathHolder.StadiumsFilePath);
 

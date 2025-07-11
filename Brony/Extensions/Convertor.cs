@@ -1,18 +1,15 @@
-﻿using Brony.Constants;
+﻿using System.Diagnostics;
+using Brony.Constants;
 using Brony.Domain;
 using Brony.Helpers;
 using Brony.Models;
+using Brony.Models.Bookings;
 using Brony.Services.Stadiums;
 
 namespace Brony.Extensions;
 
 public static class Convertor
 {
-    public static List<T> ToObject<T>(this string text)
-    {
-        return 
-    }
-
     public static List<Booking> ToBooking(this string text)
     {
         List<Booking> bookings = new List<Booking>();
@@ -41,7 +38,6 @@ public static class Convertor
 
     public static List<Stadium> ToStadium(this string text)
     {
-
         List<Stadium> stadiums = new List<Stadium>();
 
         string[] lines = text.Split('\n');
@@ -97,11 +93,6 @@ public static class Convertor
 
     public static BookingViewModel ToBookingViewModel(this Booking booking)
     {
-        if (booking == null)
-        {
-            throw new ArgumentNullException();
-        }
-
         // process of getting stadium name
         string stadiumsInTextFormat = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
 
@@ -126,7 +117,6 @@ public static class Convertor
             throw new ArgumentException("User was not found!");
         }
 
-
         // converting booking domain for view model
         return new BookingViewModel
         {
@@ -137,7 +127,5 @@ public static class Convertor
             Price = booking.Price,
         };
     }
-
-
 }
 

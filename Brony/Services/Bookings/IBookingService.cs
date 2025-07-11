@@ -1,5 +1,6 @@
 using Brony.Domain;
 using Brony.Models;
+using Brony.Models.Bookings;
 
 namespace Brony.Services.Bookings;
 

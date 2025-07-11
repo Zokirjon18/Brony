@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Brony.Helpers;
 
-public class IdGeneration
+public static class GeneratorHelper
 {
-    public static int IdGenerate(string path)
+    public static int GenerateId(string filePath)
     {
-        if (File.Exists(path))
+        if (File.Exists(filePath))
         {
-            string text = File.ReadAllText(path);
+            string text = File.ReadAllText(filePath);
 
             string[] lines = text.Split('\n');
 
@@ -33,7 +27,8 @@ public class IdGeneration
             return ++maxId;
         }
         else
+        {
             return 1;
+        }
     }
-
 }

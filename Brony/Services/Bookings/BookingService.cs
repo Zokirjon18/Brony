@@ -4,6 +4,8 @@ using Brony.Domain;
 using Brony.Extensions;
 using Brony.Helpers;
 using System.Collections.Generic;
+using Brony.Models.Bookings;
+using Brony.Services.Users;
 
 namespace Brony.Services.Bookings;
 
@@ -74,7 +76,7 @@ public class BookingService : IBookingService
 
         convertedBookings.Remove(existBooking);
 
-        List<string> bookingsInStringFormat = ToFileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
+        List<string> bookingsInStringFormat = FileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
         File.WriteAllLines(PathHolder.BookingsFilePath, bookingsInStringFormat);
     }
 
@@ -124,7 +126,7 @@ public class BookingService : IBookingService
         existBooking.StartTime = startTime;
         existBooking.EndTime = endTime;
 
-        List<string> bookingsInStringFormat = ToFileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
+        List<string> bookingsInStringFormat = FileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
         File.WriteAllLines(PathHolder.BookingsFilePath, bookingsInStringFormat);
     }
 
