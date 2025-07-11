@@ -1,27 +1,14 @@
 using Brony.Domain;
+using Brony.Models;
 
 namespace Brony.Services.Stadiums;
 
 public interface IStadiumService
 {
-    void Create(
-        string name,
-        float width,
-        float length,
-        decimal price,
-        string location, 
-        string phoneNumber,
-        string description);
+    void Create(StadiumCreateModel stadiumCreateModel);
     
     void Update(
-        int id,
-        string name,
-        float width,
-        float length,
-        decimal price,
-        string location,
-        string phoneNumber,
-        string description);
+        StadiumUpdateModel stadiumUpdateModel);
     
     void Delete(int id);
     
