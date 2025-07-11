@@ -1,8 +1,9 @@
-﻿using Brony.Domain;
+using Brony.Domain;
 using Brony.Models;
 namespace Brony.Extensions;
 public static class ConvertTo
 {
+    #region ConvertTo()
     public static UserRegisterModel ConvertingTo(this User obj)
     {
         if (obj == null) 
@@ -17,4 +18,5 @@ public static class ConvertTo
             PhoneNumber = obj.PhoneNumber
         };
     }
+    #endregion
 }

@@ -3,6 +3,7 @@ using Brony.Constants;
 using Brony.Domain;
 using Brony.Extensions;
 using Brony.Helpers;
+using System.Collections.Generic;
 using Brony.Models;
 using Brony.Services.Stadiums;
 using Brony.Services.Users;
@@ -59,17 +60,6 @@ public class BookingService : IBookingService
                 }
             }
         }
-
-        // calculating the total price
-        double numberOfMatchHours = (endTimeOfMatch - startTimeOfMatch).TotalHours;
-        decimal totalPrice = (decimal)numberOfMatchHours * existStadium.Price;
-
-        // preparing for fileload
-        string content =
-            $"{IdGeneration.IdGenerate(PathHolder.BookingsFilePath)},{createModel.UserId},{createModel.StadiumId}," +
-            $"{createModel.StartTime},{createModel.EndTime},{totalPrice}\n";
-
-        File.AppendAllText(PathHolder.BookingsFilePath, content);
     }
 
     public void Cancel(int bookingId)
