@@ -4,9 +4,6 @@ using Brony.Domain;
 using Brony.Extensions;
 using Brony.Helpers;
 using System.Collections.Generic;
-using Brony.Models;
-using Brony.Services.Stadiums;
-using Brony.Services.Users;
 
 namespace Brony.Services.Bookings;
 
