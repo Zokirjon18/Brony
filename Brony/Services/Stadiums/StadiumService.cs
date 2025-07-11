@@ -1,65 +1,57 @@
+using Brony.Constants;
 using Brony.Domain;
+using Brony.Extensions;
 using Brony.Helpers;
+using Brony.Models;
 using Brony.Services.Bookings;
 
 namespace Brony.Services.Stadiums;
 
 public class StadiumService : IStadiumService
 {
-    private int stadiumId;
-    private readonly List<Stadium> stadiums;
-    private readonly ObjectHolder objectHolder;
 
-    public StadiumService(ObjectHolder objectHolder)
+
+    public StadiumService()
     {
-        this.objectHolder = objectHolder;
-        stadiumId = 1;
-        stadiums = new List<Stadium>();
+       
+  
     }
 
     public void Create(
-        string name,
-        float width,
-        float length,
-        decimal price,
-        string location,
-        string phoneNumber,
-        string description)
+        StadiumCreateModel stadiumCreateModel)
     {
-        var existingStadium = stadiums.Find(x => x.Name == name);
+        string text = File.ReadAllText(PathHolder.StadiumsFilePath);
+
+        var convertedStadiums = text.ToStadium();
+
+        var existingStadium = convertedStadiums.Find(x => x.Name == stadiumCreateModel.Name);
+        
         if (existingStadium != null)
         {
-            throw new Exception("Stadium already exists");
+            throw new Exception($"Stadium with this name <{stadiumCreateModel.Name}> already exists");
         }
 
-        if (!string.IsNullOrEmpty(phoneNumber))
+        if (!string.IsNullOrEmpty(stadiumCreateModel.PhoneNumber))
         {
             throw new Exception("Phone should not be null or empty");
         }
 
-        if (phoneNumber.Length != 12)
+        if (stadiumCreateModel.PhoneNumber.Length != 13)
         {
-            throw new Exception("Phone number should be 12 characters");
+            throw new Exception("Phone number should be 13 characters");
         }
 
-        if (!phoneNumber.StartsWith("+998"))
+        if (!stadiumCreateModel.PhoneNumber.StartsWith("+998"))
         {
             throw new Exception("Phone number should start with '+998'");
         }
+       
 
-        var stadium = new Stadium
-        {
-            Id= IdGeneration.IdGenerate(Constants.PathHolder.StadiumIdPath),
-            Name = name,
-            Width = width,
-            Length = length,
-            Price = price,
-            Location = location,
-            PhoneNumber = phoneNumber,
-            Description = description
-        };
+        string content = $"{IdGeneration.IdGenerate(PathHolder.StadiumsFilePath)},{stadiumCreateModel.Name}," +
+            $"{stadiumCreateModel.Width},{stadiumCreateModel.Length},{stadiumCreateModel.Price}," +
+            $"{stadiumCreateModel.Location},{stadiumCreateModel.PhoneNumber},{stadiumCreateModel.Description}\n";
 
-        stadiums.Add(stadium);
+        File.WriteAllText(PathHolder.StadiumsFilePath, content);       
     }
 
     public void Update(

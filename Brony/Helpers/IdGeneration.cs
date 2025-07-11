@@ -10,17 +10,30 @@ public class IdGeneration
 {
     public static int IdGenerate(string path)
     {
-        // check path and append new id
-        int id = 0;
         if (File.Exists(path))
         {
-            var text = File.ReadAllText(path);
-            int.TryParse(text, out id);
-        }
+            string text = File.ReadAllText(path);
 
-        int newID = id+1;
-        File.WriteAllText(path, newID.ToString());
-        return newID;
+            string[] lines = text.Split('\n');
+
+            int maxId = 0;
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                string[] parts = line.Split(',');
+                string id = parts[0];
+
+                if (maxId < Convert.ToInt32(id))
+                {
+                    maxId = Convert.ToInt32(id);
+                }
+            }
+
+            return ++maxId;
+        }
+        else
+            return 1;
     }
 
 }
