@@ -10,6 +10,7 @@ namespace Brony.Services.Stadiums;
 
 public class StadiumService : IStadiumService
 {
+    private readonly BookingService bookingService;
     public void Create(StadiumCreateModel stadiumCreateModel)
     {
         string text = File.ReadAllText(PathHolder.StadiumsFilePath);
@@ -39,109 +40,89 @@ public class StadiumService : IStadiumService
         }
        
 
-        string content = $"{IdGeneration.IdGenerate(PathHolder.StadiumsFilePath)},{stadiumCreateModel.Name}," +
+        string content = $"{GeneratorHelper.GenerateId(PathHolder.StadiumsFilePath)},{stadiumCreateModel.Name}," +
             $"{stadiumCreateModel.Width},{stadiumCreateModel.Length},{stadiumCreateModel.Price}," +
             $"{stadiumCreateModel.Location},{stadiumCreateModel.PhoneNumber},{stadiumCreateModel.Description}\n";
 
         File.WriteAllText(PathHolder.StadiumsFilePath, content);       
     }
 
-    public void Update(
-        int id,
-        string name,
-        float width,
-        float length,
-        decimal price,
-        string location,
-        string phoneNumber,
-        string description)
+    public void Update(StadiumUpdateModel model)
     {
-        var existStadium = stadiums.Find(x => x.Id == id);
+        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
+        var stadiums = text.ToStadium();
+        var existStadium = stadiums.Find(x => x.Id == model.Id)
+            ?? throw new Exception("Stadium is not found");
 
-        if (existStadium == null)
-        {
-            throw new Exception("Stadium is not found");
-        }
 
-        var alreadyExistStadium = stadiums.Find(x => x.Name == name);
+        var alreadyExistStadium = stadiums.Find(x => x.Name == model.Name);
 
         if (alreadyExistStadium != null)
         {
-            throw new Exception($"Stadium already exists with this name = {name}");
+            throw new Exception($"Stadium already exists with this name = {model.Name}");
         }
 
-        if (!string.IsNullOrEmpty(phoneNumber))
+        if (!string.IsNullOrEmpty(model.PhoneNumber))
         {
             throw new Exception("Phone should not be null or empty");
         }
 
-        if (phoneNumber.Length != 12)
+        if (model.PhoneNumber.Length != 12)
         {
             throw new Exception("Phone number should be 12 characters");
         }
 
-        if (!phoneNumber.StartsWith("+998"))
+        if (!model.PhoneNumber.StartsWith("+998"))
         {
             throw new Exception("Phone number should start with '+998'");
         }
 
-        existStadium.Name = name;
-        existStadium.Location = location;
-        existStadium.Length = length;
-        existStadium.Width = width;
-        existStadium.PhoneNumber = phoneNumber;
-        existStadium.Price = price;
-        existStadium.Description = description;
+        existStadium.Name = model.Name;
+        existStadium.Location = model.Location;
+        existStadium.Length = model.Length;
+        existStadium.Width = model.Width;
+        existStadium.PhoneNumber = model.PhoneNumber;
+        existStadium.Price = model.Price;
+        existStadium.Description = model.Description;
+
+        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, stadiums.ConvertToString());
     }
 
     public void Delete(int id)
     {
-        var existStadium = stadiums.Find(x => x.Id == id);
-
-        if (existStadium != null)
-        {
-            throw new Exception("Stadium is not found");
-        }
+        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
+        var stadiums = text.ToStadium();
+        var existStadium = stadiums.Find(x => x.Id == id)
+            ?? throw new Exception("Stadium is not found");
 
         stadiums.Remove(existStadium);
+
+        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, stadiums.ConvertToString());
     }
 
     public Stadium Get(int id)
     {
-        var existStadium = stadiums.Find(x => x.Id == id);
-
-        if (existStadium != null)
-        {
-            throw new Exception("Stadium is not found");
-        }
+        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
+        var stadiums = text.ToStadium();
+        var existStadium = stadiums.Find(x => x.Id == id)
+            ?? throw new Exception("Stadium is not found");
 
         return existStadium;
     }
 
-    public List<Stadium> GetAll()
+    public List<Stadium> GetAll(string search)
     {
-        return stadiums;
-    }
-
-    public List<Stadium> Search(string search)
-    {
-        var result = new List<Stadium>();
+        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
+        var stadiums = text.ToStadium();
 
         if (!string.IsNullOrEmpty(search))
         {
-            string trimedString = search.TrimStart(' ').ToLower();
-
-            foreach (var stadium in stadiums)
-            {
-                if (stadium.Name.ToLower().Contains(trimedString))
-                {
-                    result.Add(stadium);
-                }
-            }
+            stadiums = Search(search);
         }
-
-        return result;
+        return stadiums;
     }
+
+    
 
     public List<Stadium> GetFilteredList(
         string location,
@@ -214,6 +195,8 @@ public class StadiumService : IStadiumService
     
     private List<Stadium> GetAllByLocation(string location)
     {
+        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
+        var stadiums = text.ToStadium();
         var result = new List<Stadium>();
 
         foreach (var stadium in stadiums)
@@ -259,7 +242,7 @@ public class StadiumService : IStadiumService
 
             if (startTimeHour <= startTime.Hour || endTimeHour >= endTime.Hour)
             {
-                var stadiumBookings = objectHolder.BookingService.GetAllByStadiumId(stadium.Id);
+                var stadiumBookings = bookingService.GetAllByStadiumId(stadium.Id);
 
                 foreach (var item in stadiumBookings)
                 {
@@ -271,6 +254,28 @@ public class StadiumService : IStadiumService
             }
         }
         
+        return result;
+    }
+
+    private List<Stadium> Search(string search)
+    {
+        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
+        var stadiums = text.ToStadium();
+        var result = new List<Stadium>();
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            string trimedString = search.TrimStart(' ').ToLower();
+
+            foreach (var stadium in stadiums)
+            {
+                if (stadium.Name.ToLower().Contains(trimedString))
+                {
+                    result.Add(stadium);
+                }
+            }
+        }
+
         return result;
     }
 }
