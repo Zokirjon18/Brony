@@ -1,10 +1,9 @@
-using System.Reflection.Emit;
 using Brony.Constants;
 using Brony.Domain;
 using Brony.Extensions;
 using Brony.Helpers;
-using System.Collections.Generic;
 using Brony.Models.Bookings;
+using Brony.Services.Stadiums;
 using Brony.Services.Users;
 
 namespace Brony.Services.Bookings;
@@ -59,6 +58,21 @@ public class BookingService : IBookingService
                 }
             }
         }
+
+        double numberOfMatchHours = (endTimeOfMatch - startTimeOfMatch).TotalHours;
+        decimal totalPrice = (decimal)numberOfMatchHours * existStadium.Price;
+
+        convertedBookings.Add(
+            new Booking
+            {
+                UserId = createModel.UserId,
+                StadiumId = createModel.StadiumId,
+                StartTime = createModel.StartTime,
+                EndTime = createModel.EndTime,
+                Price = totalPrice,
+            });
+
+        File.WriteAllLines(PathHolder.BookingsFilePath, convertedBookings.ConvertToString());
     }
 
     public void Cancel(int bookingId)
@@ -76,8 +90,7 @@ public class BookingService : IBookingService
 
         convertedBookings.Remove(existBooking);
 
-        List<string> bookingsInStringFormat = FileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
-        File.WriteAllLines(PathHolder.BookingsFilePath, bookingsInStringFormat);
+        File.WriteAllLines(PathHolder.BookingsFilePath, convertedBookings.ConvertToString());
     }
 
     public void ChangeDateTime(int bookingId, DateTime startTime, DateTime endTime)
@@ -122,12 +135,10 @@ public class BookingService : IBookingService
             }
         }
 
-
         existBooking.StartTime = startTime;
         existBooking.EndTime = endTime;
 
-        List<string> bookingsInStringFormat = FileFormatExtensions.ToFileFormat<Booking>(convertedBookings);
-        File.WriteAllLines(PathHolder.BookingsFilePath, bookingsInStringFormat);
+        File.WriteAllLines(PathHolder.BookingsFilePath, convertedBookings.ConvertToString());
     }
 
     public BookingViewModel Get(int id)
