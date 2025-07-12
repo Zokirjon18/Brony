@@ -31,7 +31,7 @@ public class UserService : IUserService
         
         users.Add(user);
 
-        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.CovertToString());
+        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.ConvertToString());
     }
     
     public int Login(UserLoginModel model)
@@ -89,7 +89,7 @@ public class UserService : IUserService
         existUser.LastName = model.LastName;
         existUser.PhoneNumber = model.PhoneNumber;
 
-        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.CovertToString());
+        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.ConvertToString());
     }
     
     public void Delete(int id)
@@ -103,7 +103,7 @@ public class UserService : IUserService
     
         users.Remove(existUser);
     
-        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.CovertToString());
+        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.ConvertToString());
     }
     
     public List<UserViewModel> GetAll(string search)
@@ -147,7 +147,7 @@ public class UserService : IUserService
     
         existUser.Password = newPassword;
     
-        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.CovertToString());
+        FileHelper.WriteToFile(PathHolder.UsersFilePath, users.ConvertToString());
     }
     
     private List<User> Search(List<User> users, string search)

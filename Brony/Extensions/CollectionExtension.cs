@@ -4,7 +4,7 @@ namespace Brony.Extensions;
 
 public static class CollectionExtension
 {
-    public static List<string> CovertToString(this List<User> users)
+    public static List<string> ConvertToString(this List<User> users)
     {
         var convertedUser = new List<string>();
         
@@ -16,7 +16,7 @@ public static class CollectionExtension
         return convertedUser;
     }
     
-    public static List<string> CovertToString(this List<Booking> bookings)
+    public static List<string> ConvertToString(this List<Booking> bookings)
     {
         var convertedBooking = new List<string>();
         
@@ -28,7 +28,7 @@ public static class CollectionExtension
         return convertedBooking;
     }
     
-    public static List<string> CovertToString(this List<Stadium> stadiums)
+    public static List<string> ConvertToString(this List<Stadium> stadiums)
     {
         var convertedStadium = new List<string>();
         

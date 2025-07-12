@@ -59,6 +59,22 @@ public class BookingService : IBookingService
                 }
             }
         }
+
+        double numberOfMatchHours = (endTimeOfMatch - startTimeOfMatch).TotalHours;
+        decimal totalPrice = (decimal)numberOfMatchHours * existStadium.Price;
+
+        convertedBookings.Add(
+            new Booking
+            {
+                UserId = createModel.UserId,
+                StadiumId = createModel.StadiumId,
+                StartTime = createModel.StartTime,
+                EndTime = createModel.EndTime,
+                Price = totalPrice,
+            });
+
+        File.WriteAllLines(PathHolder.BookingsFilePath,convertedBookings.ConvertToString())
+
     }
 
     public void Cancel(int bookingId)
