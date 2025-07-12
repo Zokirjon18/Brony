@@ -14,9 +14,7 @@ public interface IStadiumService
     
     Stadium Get(int id);
     
-    List<Stadium> GetAll();
-    
-    List<Stadium> Search(string search);
+    List<Stadium> GetAll(string search);
     
     List<Stadium> GetFilteredList(string location, decimal? price, DateTime? startDate, DateTime? endDate);
 }
