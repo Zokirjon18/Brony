@@ -13,7 +13,6 @@ public class StadiumService : IStadiumService
     public void Create(StadiumCreateModel stadiumCreateModel)
     {
         var convertedStadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
-
         var existingStadium = convertedStadiums.Find(x => x.Name == stadiumCreateModel.Name);
         
         if (existingStadium != null)
@@ -40,10 +39,12 @@ public class StadiumService : IStadiumService
             Name = stadiumCreateModel.Name,
             PhoneNumber = stadiumCreateModel.PhoneNumber,
             Description = stadiumCreateModel.Description,
-            Location = stadiumCreateModel.Location, 
+            Location = stadiumCreateModel.Location,
             Length = stadiumCreateModel.Length,
             Price = stadiumCreateModel.Price,
             Width = stadiumCreateModel.Width,
+            StartWorkingTime = stadiumCreateModel.StartWorkingTime,
+            EndWorkingTime = stadiumCreateModel.EndWorkingTime
         });
         FileHelper.WriteToFile(PathHolder.StadiumsFilePath, convertedStadiums);    
     }
