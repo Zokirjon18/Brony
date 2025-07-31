@@ -1,6 +1,5 @@
 using Brony.Constants;
 using Brony.Domain;
-using Brony.Extensions;
 using Brony.Helpers;
 using Brony.Models;
 using Brony.Models.Stadiums;
@@ -13,10 +12,7 @@ public class StadiumService : IStadiumService
     private readonly BookingService bookingService;
     public void Create(StadiumCreateModel stadiumCreateModel)
     {
-        string text = File.ReadAllText(PathHolder.StadiumsFilePath);
-
-        var convertedStadiums = text.ToStadium();
-
+        var convertedStadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
         var existingStadium = convertedStadiums.Find(x => x.Name == stadiumCreateModel.Name);
         
         if (existingStadium != null)
@@ -38,19 +34,24 @@ public class StadiumService : IStadiumService
         {
             throw new Exception("Phone number should start with '+998'");
         }
-       
-
-        string content = $"{GeneratorHelper.GenerateId(PathHolder.StadiumsFilePath)},{stadiumCreateModel.Name}," +
-            $"{stadiumCreateModel.Width},{stadiumCreateModel.Length},{stadiumCreateModel.Price}," +
-            $"{stadiumCreateModel.Location},{stadiumCreateModel.PhoneNumber},{stadiumCreateModel.Description}\n";
-
-        File.WriteAllText(PathHolder.StadiumsFilePath, content);       
+        convertedStadiums.Add(new Stadium
+        {
+            Name = stadiumCreateModel.Name,
+            PhoneNumber = stadiumCreateModel.PhoneNumber,
+            Description = stadiumCreateModel.Description,
+            Location = stadiumCreateModel.Location,
+            Length = stadiumCreateModel.Length,
+            Price = stadiumCreateModel.Price,
+            Width = stadiumCreateModel.Width,
+            StartWorkingTime = stadiumCreateModel.StartWorkingTime,
+            EndWorkingTime = stadiumCreateModel.EndWorkingTime
+        });
+        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, convertedStadiums);    
     }
 
     public void Update(StadiumUpdateModel model)
     {
-        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
-        var stadiums = text.ToStadium();
+        var stadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
         var existStadium = stadiums.Find(x => x.Id == model.Id)
             ?? throw new Exception("Stadium is not found");
 
@@ -85,25 +86,23 @@ public class StadiumService : IStadiumService
         existStadium.Price = model.Price;
         existStadium.Description = model.Description;
 
-        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, stadiums.ConvertToString());
+        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, stadiums);
     }
 
     public void Delete(int id)
     {
-        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
-        var stadiums = text.ToStadium();
+        var stadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
         var existStadium = stadiums.Find(x => x.Id == id)
             ?? throw new Exception("Stadium is not found");
 
         stadiums.Remove(existStadium);
 
-        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, stadiums.ConvertToString());
+        FileHelper.WriteToFile(PathHolder.StadiumsFilePath, stadiums);
     }
 
     public Stadium Get(int id)
     {
-        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
-        var stadiums = text.ToStadium();
+        var stadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
         var existStadium = stadiums.Find(x => x.Id == id)
             ?? throw new Exception("Stadium is not found");
 
@@ -112,8 +111,7 @@ public class StadiumService : IStadiumService
 
     public List<Stadium> GetAll(string search)
     {
-        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
-        var stadiums = text.ToStadium();
+        var stadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
 
         if (!string.IsNullOrEmpty(search))
         {
@@ -195,8 +193,7 @@ public class StadiumService : IStadiumService
     
     private List<Stadium> GetAllByLocation(string location)
     {
-        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
-        var stadiums = text.ToStadium();
+        var stadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
         var result = new List<Stadium>();
 
         foreach (var stadium in stadiums)
@@ -234,11 +231,11 @@ public class StadiumService : IStadiumService
 
         foreach (var stadium in stadiums)
         {
-            var startTimePeaces = stadium.StartWorkingTime.Split(':');
-            var startTimeHour = Convert.ToInt32(startTimePeaces[0]);
+            var startTimePeaces = stadium.StartWorkingTime;
+            var startTimeHour = Convert.ToInt32(startTimePeaces);
 
-            var endTimePeaces = stadium.EndWorkingTime.Split(':');
-            var endTimeHour = Convert.ToInt32(endTimePeaces[0]);
+            var endTimePeaces = stadium.EndWorkingTime;
+            var endTimeHour = Convert.ToInt32(endTimePeaces);
 
             if (startTimeHour <= startTime.Hour || endTimeHour >= endTime.Hour)
             {
@@ -259,8 +256,7 @@ public class StadiumService : IStadiumService
 
     private List<Stadium> Search(string search)
     {
-        var text = FileHelper.ReadFromFile(PathHolder.StadiumsFilePath);
-        var stadiums = text.ToStadium();
+        var stadiums = FileHelper.ReadFromFile<Stadium>(PathHolder.StadiumsFilePath);
         var result = new List<Stadium>();
 
         if (!string.IsNullOrEmpty(search))
