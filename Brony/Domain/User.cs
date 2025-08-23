@@ -10,6 +10,7 @@ public class User : BaseEntity
     {
         Id = GeneratorHelper.GenerateId(PathHolder.UsersFilePath);
     }
+
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }

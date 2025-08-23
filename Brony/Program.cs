@@ -1,25 +1,11 @@
-using System.Collections;
-using System.ComponentModel.Design;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml;
-using Brony.Constants;
-using Brony.Domain;
-using Brony.Helpers;
-using Brony.Models;
-using Brony.Models.Users;
-using Brony.Services.Users;
-using Newtonsoft.Json;
-using System.Linq;
-using Brony.Exceptions;
-using Brony.Services.Stadiums;
-
 namespace Brony;
 
 public class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
+        var dapper = new Dapper();
+
+        await dapper.GetByIdAsync(1);
     }
 }
