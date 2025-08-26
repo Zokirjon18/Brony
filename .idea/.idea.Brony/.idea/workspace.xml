@@ -9,13 +9,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c8f044f-0b21-4c89-97a1-bfc7b4f3280a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Brony/Dapper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brony/IDapper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Brony.DataAccess/Contexts/AppDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Brony/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Brony/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brony/Brony.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Brony/Brony.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brony/Constants/PathHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony/Constants/PathHolder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brony/Domain/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony/Domain/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brony/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Brony.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Constants/PathHolder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Dapper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Data/bookings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Data/staduims.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Data/users.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Domain/BaseEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Domain/Entities/BaseEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Domain/Booking.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Domain/Entities/Booking.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Domain/Stadium.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Domain/Entities/Stadium.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Domain/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Domain/Entities/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Exceptions/AlreadyExistException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Exceptions/AlreadyExistException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Exceptions/NotFoundException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Exceptions/NotFoundException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Extensions/MapExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Extensions/MapExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Extensions/StringExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Extensions/StringExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Helpers/FileHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Helpers/GeneratorHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Helpers/PasswordHasher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Helpers/PasswordHasher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/IDapper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Bookings/BookingCreateModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Bookings/BookingCreateModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Bookings/BookingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Bookings/BookingViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Common/BaseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Common/BaseModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Stadiums/StadiumCreateModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Stadiums/StadiumCreateModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Stadiums/StadiumUpdateModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Stadiums/StadiumUpdateModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Stadiums/StadiumViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Stadiums/StadiumViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Users/UserLoginModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Users/UserLoginModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Users/UserRegisterModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Users/UserRegisterModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Users/UserUpdateModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Users/UserUpdateModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Models/Users/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Models/Users/UserViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Services/Bookings/BookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Services/Bookings/BookingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Services/Bookings/IBookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Services/Bookings/IBookingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Services/Stadiums/IStadiumService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Services/Stadiums/IStadiumService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Services/Stadiums/StadiumService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Services/Stadiums/StadiumService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Services/Users/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Services/Users/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brony/Services/Users/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Brony.Service/Services/Users/UserService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +61,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Brony/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bc260ffaa5094c9c9f46b48111bc16091e6600/fe/e4de63cf/JsonSerializerOptions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1c3f7d5c03bf77051eb8a758fb3549c4e2d4cb3dc6f6d567a94a315044961e/List.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/29ea32a76b2a6b8eb246f247df6a6a86d887384b4c31db2a35effccdd86c24/JsonSerializerInternalReader.cs" root0="FORCE_HIGHLIGHTING" />
